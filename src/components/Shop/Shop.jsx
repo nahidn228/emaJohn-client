@@ -16,7 +16,7 @@ const Shop = () => {
   const [itemsPerPages, setItemsPerPages] = useState(10);
   const { count } = useLoaderData();
   //   console.log(count);
-  console.log(currentPage);
+//   console.log(currentPage);
 
   const numberOfPages = Math.ceil(count / itemsPerPages);
 
@@ -122,7 +122,7 @@ const Shop = () => {
         <button onClick={handlePreviousPage}>Prev</button>
         {pages.map((page, idx) => (
           <button
-            className={currentPage === page && "selected"}
+            className={currentPage === page ? "selected" : ""}
             onClick={() => setCurrentPage(page)}
             key={page}
           >
