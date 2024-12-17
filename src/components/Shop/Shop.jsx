@@ -10,10 +10,21 @@ import Product from "../Product/Product";
 import "./Shop.css";
 
 const Shop = () => {
-  const { count } = useLoaderData();
-  console.log(count);
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
+  const [itemsPerPages, setItemsPerPages] = useState(10);
+  const { count } = useLoaderData();
+  //   console.log(count);
+
+  const numberOfPages = Math.ceil(count / itemsPerPages);
+
+  //   const pages = [];
+  //   for (let i = 0; i < numberOfPages; i++) {
+  //     pages.push(i);
+  //   }
+  //   console.log(pages);
+
+  const pages = [...Array(numberOfPages).keys()];
 
   useEffect(() => {
     fetch("http://localhost:5000/products")
@@ -66,6 +77,12 @@ const Shop = () => {
     deleteShoppingCart();
   };
 
+  const handleItemsPerPage = (e) => {
+    console.log(e.target.value);
+    const val = e.target.value;
+    setItemsPerPages(val);
+  };
+
   return (
     <div className="shop-container">
       <div className="products-container">
@@ -83,6 +100,24 @@ const Shop = () => {
             <button className="btn-proceed">Review Order</button>
           </Link>
         </Cart>
+      </div>
+      <div className="pagination">
+        {pages.map((page) => (
+          <button key={page}>{page}</button>
+        ))}
+        <select
+          defaultValue={itemsPerPages}
+          onChange={handleItemsPerPage}
+          name=""
+          id=""
+        >
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="20">20</option>
+          <option value="30">30</option>
+          <option value="40">40</option>
+          <option value="50">50</option>
+        </select>
       </div>
     </div>
   );
